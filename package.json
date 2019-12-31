@@ -1,0 +1,23 @@
+{
+  "name": "@types/uptimerobot",
+  "version": "2.0.0",
+  "description": "Type definitions for api.uptimerobot.com",
+  "main": ".",
+  "types": ".",
+  "license": "MIT",
+  "keywords": [
+    "types",
+    "uptimerobot",
+    "api"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "gts check",
+    "clean": "gts clean",
+    "fix": "gts fix"
+  },
+  "devDependencies": {
+    "gts": "^1.1.2",
+    "@types/node": "^10.0.3"
+  }
+}
