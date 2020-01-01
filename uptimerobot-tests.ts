@@ -21,10 +21,44 @@ import {
   Log,
   Account,
   AlertContact,
+  AlertContactCreateRequest,
+  AlertContactCreateResponse,
+  AlertContactDeleteRequest,
+  AlertContactDeleteResponse,
+  AlertContactEditRequest,
+  AlertContactEditResponse,
+  AlertContactListRequest,
+  AlertContactListResponse,
   Monitor,
+  MonitorListRequest,
+  MonitorListResponse,
+  MonitorCreateRequest,
+  MonitorCreateResponse,
+  MonitorDeleteRequest,
+  MonitorDeleteResponse,
+  MonitorEditRequest,
+  MonitorEditResponse,
+  MonitorResetRequest,
+  MonitorResetResponse,
   MWindow,
+  MWindowCreateRequest,
+  MWindowCreateResponse,
+  MWindowDeleteRequest,
+  MWindowDeleteResponse,
+  MWindowEditRequest,
+  MWindowEditResponse,
+  MWindowListRequest,
+  MWindowListResponse,
   PSP,
-} from '.';
+  PSPCreateRequest,
+  PSPCreateResponse,
+  PSPDeleteRequest,
+  PSPDeleteResponse,
+  PSPEditRequest,
+  PSPEditResponse,
+  PSPListRequest,
+  PSPListResponse,
+} from './index';
 
 const pagination: Pagination = {
   limit: 1,
@@ -76,18 +110,18 @@ const alertContact: AlertContact = {
   value: 'jim@example.com',
 };
 
-const alertContactRequest: AlertContact.ListRequest = {
+const alertContactRequest: AlertContactListRequest = {
   alert_contacts: '0',
   offset: 0,
   limit: 50,
 };
 
-const alertContactRequest2: AlertContact.ListRequest = {
+const alertContactRequest2: AlertContactListRequest = {
   offset: 0,
   limit: 50,
 };
 
-const alertContactResponse: AlertContact.ListResponse = {
+const alertContactResponse: AlertContactListResponse = {
   stat: Stat.ok,
   offset: 0,
   limit: 50,
@@ -95,47 +129,47 @@ const alertContactResponse: AlertContact.ListResponse = {
   alert_contacts: [alertContact],
 };
 
-const createAlertContactRequest: AlertContact.CreateRequest = {
+const createAlertContactRequest: AlertContactCreateRequest = {
   type: AlertContactType.email,
   friendly_name: 'MyAlertContact',
   value: 'jim@example.com',
 };
 
-const createAlertContactResponse: AlertContact.CreateResponse = {
+const createAlertContactResponse: AlertContactCreateResponse = {
   stat: Stat.ok,
   alertcontact: alertContact,
 };
 
-const editAlertContactRequest1: AlertContact.EditRequest = {
+const editAlertContactRequest1: AlertContactEditRequest = {
   id: 0,
   friendly_name: 'MyAlertContact2',
   value: 'jim@example.com2',
 };
 
-const editAlertContactRequest2: AlertContact.EditRequest = {
+const editAlertContactRequest2: AlertContactEditRequest = {
   id: 0,
 };
 
-const editAlertContactResponse1: AlertContact.EditResponse = {
+const editAlertContactResponse1: AlertContactEditResponse = {
   stat: Stat.ok,
   alertcontact: alertContact,
 };
 
-const editAlertContactResponse2: AlertContact.EditResponse = {
+const editAlertContactResponse2: AlertContactEditResponse = {
   stat: Stat.ok,
   alertcontact: { id: 0 },
 };
 
-const deleteAlertContactRequest: AlertContact.DeleteRequest = {
+const deleteAlertContactRequest: AlertContactDeleteRequest = {
   id: 0,
 };
 
-const deleteAlertContactResponse1: AlertContact.DeleteResponse = {
+const deleteAlertContactResponse1: AlertContactDeleteResponse = {
   stat: Stat.ok,
   alertcontact: alertContact,
 };
 
-const deleteAlertContactResponse2: AlertContact.DeleteResponse = {
+const deleteAlertContactResponse2: AlertContactDeleteResponse = {
   stat: Stat.ok,
   alertcontact: { id: 0 },
 };
@@ -185,7 +219,7 @@ const monitor2: Monitor = {
   create_datetime: 1234567890,
 };
 
-const monitorListRequest1: Monitor.ListRequest = {
+const monitorListRequest1: MonitorListRequest = {
   monitors: '0',
   types: [MonitorType.http, MonitorType.https, MonitorType.keyword].join('-'),
   statuses: [MonitorState.warn, MonitorState.down].join('-'),
@@ -214,15 +248,15 @@ const monitorListRequest1: Monitor.ListRequest = {
   search: 'myMonitor',
 };
 
-const monitorListRequest2: Monitor.ListRequest = {};
+const monitorListRequest2: MonitorListRequest = {};
 
-const monitorListResponse: Monitor.ListResponse = {
+const monitorListResponse: MonitorListResponse = {
   stat: Stat.ok,
   pagination,
   monitors: [monitor1, monitor2],
 };
 
-const createMonitorRequest1: Monitor.CreateRequest = {
+const createMonitorRequest1: MonitorCreateRequest = {
   friendly_name: 'myMonitor',
   url: 'https://example.com',
   type: MonitorType.https,
@@ -243,13 +277,13 @@ const createMonitorRequest1: Monitor.CreateRequest = {
   ignore_ssl_errors: 0,
 };
 
-const createMonitorRequest2: Monitor.CreateRequest = {
+const createMonitorRequest2: MonitorCreateRequest = {
   friendly_name: 'myMonitor',
   url: 'https://example.com',
   type: MonitorType.https,
 };
 
-const createMonitorResponse: Monitor.CreateResponse = {
+const createMonitorResponse: MonitorCreateResponse = {
   stat: Stat.ok,
   monitor: {
     id: 0,
@@ -257,7 +291,7 @@ const createMonitorResponse: Monitor.CreateResponse = {
   },
 };
 
-const editMonitorRequest1: Monitor.EditRequest = {
+const editMonitorRequest1: MonitorEditRequest = {
   id: 0,
   friendly_name: 'myMonitor',
   url: 'https://example.com',
@@ -278,31 +312,31 @@ const editMonitorRequest1: Monitor.EditRequest = {
   ignore_ssl_errors: 0,
 };
 
-const editMonitorRequest2: Monitor.EditRequest = {
+const editMonitorRequest2: MonitorEditRequest = {
   id: 0,
   friendly_name: 'myMonitor',
   url: 'https://example.com',
 };
 
-const editMonitorResponse: Monitor.EditResponse = {
+const editMonitorResponse: MonitorEditResponse = {
   stat: Stat.ok,
   monitor: { id: 0 },
 };
 
-const deleteMonitorRequest: Monitor.DeleteRequest = {
+const deleteMonitorRequest: MonitorDeleteRequest = {
   id: 0,
 };
 
-const deleteMonitorResponse: Monitor.DeleteResponse = {
+const deleteMonitorResponse: MonitorDeleteResponse = {
   stat: Stat.ok,
   monitor: { id: 0 },
 };
 
-const resetMonitorRequest: Monitor.ResetRequest = {
+const resetMonitorRequest: MonitorResetRequest = {
   id: 0,
 };
 
-const resetMonitorResponse: Monitor.ResetResponse = {
+const resetMonitorResponse: MonitorResetResponse = {
   stat: Stat.ok,
   monitor: { id: 0 },
 };
@@ -318,24 +352,24 @@ const mWindow: MWindow = {
   status: 0,
 };
 
-const mWindowRequest1: MWindow.ListRequest = {
+const mWindowRequest1: MWindowListRequest = {
   mwindows: '0-1-2',
   offset: 0,
   limit: 50,
 };
 
-const mWindowRequest2: MWindow.ListRequest = {
+const mWindowRequest2: MWindowListRequest = {
   offset: 0,
   limit: 50,
 };
 
-const mWindowResponse: MWindow.ListResponse = {
+const mWindowResponse: MWindowListResponse = {
   stat: Stat.ok,
   pagination,
   mwindows: [mWindow],
 };
 
-const createMWindowRequest1: MWindow.CreateRequest = {
+const createMWindowRequest1: MWindowCreateRequest = {
   friendly_name: 'myMWindow',
   type: MWindowType.weekly,
   value: '1',
@@ -343,13 +377,13 @@ const createMWindowRequest1: MWindow.CreateRequest = {
   start_time: '00:00',
 };
 
-const createMWindowRequest2: MWindow.CreateRequest = {
+const createMWindowRequest2: MWindowCreateRequest = {
   friendly_name: 'myMWindow',
   type: MWindowType.weekly,
   value: '1',
 };
 
-const createMWindowResponse: MWindow.CreateResponse = {
+const createMWindowResponse: MWindowCreateResponse = {
   stat: Stat.ok,
   mwindow: {
     id: 0,
@@ -357,7 +391,7 @@ const createMWindowResponse: MWindow.CreateResponse = {
   },
 };
 
-const editMWindowRequest1: MWindow.EditRequest = {
+const editMWindowRequest1: MWindowEditRequest = {
   id: 0,
   friendly_name: 'myMWindow',
   value: '1',
@@ -365,20 +399,20 @@ const editMWindowRequest1: MWindow.EditRequest = {
   start_time: '00:00',
 };
 
-const editMWindowRequest2: MWindow.EditRequest = {
+const editMWindowRequest2: MWindowEditRequest = {
   id: 0,
 };
 
-const editMWindowResponse: MWindow.EditResponse = {
+const editMWindowResponse: MWindowEditResponse = {
   stat: Stat.ok,
   mwindow: { id: 0 },
 };
 
-const deleteMWindowRequest2: MWindow.DeleteRequest = {
+const deleteMWindowRequest2: MWindowDeleteRequest = {
   id: 0,
 };
 
-const deleteMWindowResponse: MWindow.DeleteResponse = {
+const deleteMWindowResponse: MWindowDeleteResponse = {
   stat: Stat.ok,
   mwindow: { id: 0 },
 };
@@ -393,18 +427,18 @@ const psp: PSP = {
   custom_url: 'https://custom.example.com',
 };
 
-const pspRequest1: PSP.ListRequest = {
+const pspRequest1: PSPListRequest = {
   psps: '0-1-2',
   offset: 0,
   limit: 50,
 };
 
-const pspRequest2: PSP.ListRequest = {
+const pspRequest2: PSPListRequest = {
   offset: 0,
   limit: 50,
 };
 
-const pspResponse: PSP.ListResponse = {
+const pspResponse: PSPListResponse = {
   stat: Stat.ok,
   offset: 0,
   limit: 50,
@@ -412,7 +446,7 @@ const pspResponse: PSP.ListResponse = {
   psps: [psp],
 };
 
-const createPspRequest1: PSP.CreateRequest = {
+const createPspRequest1: PSPCreateRequest = {
   friendly_name: 'myPsp',
   monitors: '0-1-2',
   type: PSPType.all,
@@ -423,18 +457,18 @@ const createPspRequest1: PSP.CreateRequest = {
   status: PSPState.active,
 };
 
-const createPspRequest2: PSP.CreateRequest = {
+const createPspRequest2: PSPCreateRequest = {
   friendly_name: 'myPsp',
   monitors: '0-1-2',
   type: PSPType.all,
 };
 
-const createPspResponse: PSP.CreateResponse = {
+const createPspResponse: PSPCreateResponse = {
   stat: Stat.ok,
   psp: { id: 0 },
 };
 
-const editPspRequest1: PSP.EditRequest = {
+const editPspRequest1: PSPEditRequest = {
   id: 0,
   friendly_name: 'myPsp',
   monitors: '0-1-2',
@@ -445,22 +479,22 @@ const editPspRequest1: PSP.EditRequest = {
   status: PSPState.active,
 };
 
-const editPspRequest2: PSP.EditRequest = {
+const editPspRequest2: PSPEditRequest = {
   id: 0,
   friendly_name: 'myPsp',
   monitors: '0-1-2',
 };
 
-const editPspResponse: PSP.EditResponse = {
+const editPspResponse: PSPEditResponse = {
   stat: Stat.ok,
   psp: { id: 0 },
 };
 
-const deletePspRequest2: PSP.DeleteRequest = {
+const deletePspRequest2: PSPDeleteRequest = {
   id: 0,
 };
 
-const deletePspResponse: PSP.DeleteResponse = {
+const deletePspResponse: PSPDeleteResponse = {
   stat: Stat.ok,
   psp: { id: 0 },
 };
