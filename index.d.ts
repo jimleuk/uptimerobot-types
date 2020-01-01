@@ -3,193 +3,205 @@
 // Definitions by: Jim Le <jim@height.io>
 // Typescript version: 3.7.4
 
-declare namespace UptimeRobot {
-
-  //#region Enums
-
-  enum Stat {
-    ok = 'ok',
-    fail = 'fail',
-  }
-
-  enum ErrorType {
-    invalidParameter = 'invalid_parameter',
-    missingParameter = 'missing_parameter',
-  }
-
-  //#endregion
-
-  //#region Models
-
-  interface Pagination {
-    offset: number;
-    limit: number;
-    total: number;
-  }
-
-  /** A user account */
-  interface Account {
-    /** the account e-mail */
-    email: string
-    /** The max number of monitors that can be created for the account */
-    monitor_limit: number
-    /** The min monitoring interval (in seconds) supported by the account */
-    monitor_interval: number
-    /** the number of "up" monitors */
-    up_monitors: number
-    /** the number of "down" monitors */
-    down_monitors: number
-    /** the number of "paused" monitors */
-    paused_monitors: number
-  }
-
-  /** An alert contact */
-  interface AlertContact {
-    /** The ID of the alert contact. */
-    id: number
-    /** Friendly name of the alert contact (for making it easier to distinguish
-     * from others)
-     */
-    friendly_name: string
-    type: AlertContact.Type
-    status: AlertContact.State
-    /** Alert contact's address/phone. */
-    value: string
-  }
-
-  /** A Monitor is akin to a scheduled task/job */
-  interface Monitor {
-    id: number
-    /** The friendly name of the monitor. */
-    friendly_name: string
-    /** the URL/IP of the monitor. */
-    url: string
-    type: Monitor.Type
-    sub_type?: Monitor.SubType
-    keyword_type?: Monitor.KeywordType
-    /** Used only for "Keyword monitoring (monitor>type = 2)" and shows "if the
-     * monitor will be flagged as down when the keyword exists or not exists".
-     * The value of the keyword.
-     */
-    keyword_value?: string
-    /** Used for password-protected web pages (HTTP Basic Auth). Available for
-     * HTTP and keyword monitoring.
-     */
-    http_username?: string
-    /** Used for password-protected web pages (HTTP Basic Auth). Available for
-     * HTTP and keyword monitoring.
-     */
-    http_password?: string
-    /** Used only for "Port monitoring (monitor>type = 4)" and shows the port
-     * monitored.
-     */
-    port?: number
-    /** the interval for the monitoring check (300 seconds by default). */
-    interval: number
-    status: Monitor.State
-    /** creation time of Monitor in unix timestamp format */
-    create_datetime: number
-    monitor_group?: number
-    /** 0 - false, 1 - true */
-    is_group_main?: 0 | 1
-    /** all events logged for this Monitor. Only available if requested
-     * (ie. ?logs=1)
-     */
-    logs?: Monitor.Log[]
-  }
-
-  /** A maintenance window */
-  interface MWindow {
-    id: number
-    /** TODO: the property "user" has no description in official docs */
-    user: number
-    type: MWindow.Type
-    /** Friendly name of the maintenance window (for making it easier to
-     * distinguish from others)
-     */
-    friendly_name: string
-    /** Start time of the maintenance windows. Unix time for type=1 and HH:mm for
-     * other types
-     */
-    start_time: string
-    /** Duration of the maintenance windows in minutes */
-    duration: number
-    /** Seperated with "-" and used only for weekly and monthly maintenance 
-     * windows
-     */
-    value: string
-    /** The status of the maintenance window. 0 - paused or 1 - active */
-    status: MWindow.State
-  }
-
-  /** a public status page */
-  interface PSP {
-    id: number
-    /** Friendly name of the status page (for making it easier to distinguish from
-     *  others) */
-    friendly_name: string
-    /** The list of monitorIDs to be displayed in status page (the values are 
-     * seperated with "-" or 0 for all monitors) */
-    monitors: string
-    /** The sort order of the status page */
-    sort: PSP.Sort
-    /** The status of the status page. 0 - paused or 1 - active */
-    status: PSP.State
-    /** The uptimerobot.com hosted url eg. https://stats.uptimerobot.com/12345 */
-    standard_url: string
-    /** The domain or subdomain that the status page will run on. eg.
-     * "https://status.mydomain.com" */
-    custom_url: string
-  }
-
-  //endregion
-
-  //#region Response
-
-  /** Response object for Bad requests */
-  interface ErrorResponse {
-    stat: Stat;
-    error: {
-      type: ErrorType;
-      parameter_name: string;
-      passed_value?: string;
-      message?: string;
-    };
-  }
-
-  //endregion
-
+export enum Stat {
+  ok = 'ok',
+  fail = 'fail',
 }
 
-declare namespace UptimeRobot.AlertContact {
+export enum ErrorType {
+  invalidParameter = 'invalid_parameter',
+  missingParameter = 'missing_parameter',
+}
 
-  //#region Enums
+/** The type of the alert contact notified (Zapier, HipChat and Slack are not
+ * supported in the newAlertContact method yet)
+ */
+export enum AlertContactType {
+  sms = 1,
+  email = 2,
+  twitter = 3,
+  boxcar = 4,
+  webhook = 5,
+  pushbullet = 6,
+  zapier = 7,
+  pushover = 9,
+  hipchat = 10,
+  slack = 11,
+}
 
-  /** The type of the alert contact notified (Zapier, HipChat and Slack are not
-   * supported in the newAlertContact method yet)
+/** The status of the alert contact */
+export enum AlertContactState {
+  /** pending activation */
+  pending = 0,
+  paused = 1,
+  active = 2,
+}
+
+/** The type of the monitor. */
+export enum MonitorType {
+  http = 1,
+  https = 1,
+  keyword = 2,
+  port = 4,
+}
+
+/** Used only for "Port monitoring (monitor>type = 4)" and shows which
+ * pre-defined port/service is monitored or if a custom port is monitored.
+ */
+export enum MonitorSubType {
+  none = '',
+  http = 1,
+  https = 2,
+  ftp = 3,
+  smtp = 4,
+  pop3 = 5,
+  imap = 6,
+  customPort = 99,
+}
+
+/** Used only for "Keyword monitoring (monitor>type = 2)" and shows "if the
+ * monitor will be flagged as down when the keyword exists or not exists".
+ */
+export enum MonitorKeywordType {
+  none = '',
+  exists = 1,
+  notExists = 2,
+}
+
+/** The status of the monitor. When used with the editMonitor method 0 (to
+ * pause) or 1 (to start) can be sent.
+ */
+export enum MonitorState {
+  paused = 0,
+  new = 1,
+  up = 2,
+  warn = 8,
+  down = 9,
+}
+
+/** The value of the keyword. */
+export enum LogType {
+  down = 1,
+  up = 2,
+  started = 98,
+  paused = 99,
+}
+
+/** The HTTP method to be used */
+export enum MonitorHttpMethod {
+  head = 1,
+  get = 2,
+  post = 3,
+  put = 4,
+  patch = 5,
+  delete = 6,
+  options = 7,
+}
+
+/** The format of data to be sent with POST, PUT, PATCH, DELETE, OPTIONS HTTP
+ * methods
+ */
+export enum MonitorHttpMethodPostType {
+  keyValue = 1,
+  rawData = 2,
+}
+
+/** The Content-Type for POST, PUT, PATCH, DELETE, OPTIONS HTTP methods */
+export enum MonitorHttpMethodContentType {
+  /** text/html */
+  html = 0,
+  /** application/json */
+  json = 1,
+}
+
+/** The type of the maintenance window */
+export enum MWindowType {
+  once = 1,
+  daily = 2,
+  weekly = 3,
+  monthly = 4,
+}
+
+/** The status of the maintenance window. 0 - paused or 1 - active */
+export enum MWindowState {
+  paused,
+  active,
+}
+
+/** The status of the status page. 0 - paused or 1 - active */
+export enum PSPState {
+  paused,
+  active,
+}
+
+/** The sorting of the status page */
+export enum PSPSort {
+  /** friendly name (a-z) */
+  friendlyNameAsc = 1,
+  /** friendly name (z-a) */
+  friendlyNameDesc = 2,
+  /** status (up-down-paused) */
+  statusDesc = 3,
+  /** status (down-up-paused) */
+  statusAsc = 4,
+}
+
+/** Sets the type of status page */
+export enum PSPType {
+  /** for all monitors */
+  all = 1,
+  /** for selected monitors */
+  custom = 2,
+}
+
+interface Pagination {
+  offset: number;
+  limit: number;
+  total: number;
+}
+
+/** A user account */
+interface Account {
+  /** the account e-mail */
+  email: string
+  /** The max number of monitors that can be created for the account */
+  monitor_limit: number
+  /** The min monitoring interval (in seconds) supported by the account */
+  monitor_interval: number
+  /** the number of "up" monitors */
+  up_monitors: number
+  /** the number of "down" monitors */
+  down_monitors: number
+  /** the number of "paused" monitors */
+  paused_monitors: number
+}
+
+/** Response object for Bad requests */
+interface ErrorResponse {
+  stat: Stat;
+  error: {
+    type: ErrorType;
+    parameter_name: string;
+    passed_value?: string;
+    message?: string;
+  };
+}
+
+/** An alert contact */
+interface AlertContact {
+  /** The ID of the alert contact. */
+  id: number
+  /** Friendly name of the alert contact (for making it easier to distinguish
+   * from others)
    */
-  enum Type {
-    sms = 1,
-    email = 2,
-    twitter = 3,
-    boxcar = 4,
-    webhook = 5,
-    pushbullet = 6,
-    zapier = 7,
-    pushover = 9,
-    hipchat = 10,
-    slack = 11,
-  }
+  friendly_name: string
+  type: AlertContactType
+  status: AlertContactState
+  /** Alert contact's address/phone. */
+  value: string
+}
 
-  /** The status of the alert contact */
-  enum State {
-    /** pending activation */
-    pending = 0,
-    paused = 1,
-    active = 2,
-  }
-
-  //#endregion
+declare namespace AlertContact {
 
   //#region Requests
 
@@ -211,7 +223,7 @@ declare namespace UptimeRobot.AlertContact {
     /** The id of the Alert Contact */
     id?: number
     /** The type of the Alert Contact */
-    type?: Type
+    type?: AlertContactType
     /** Friendly name of the alert contact (for making it easier to distinguish 
      * from others)
      */
@@ -225,7 +237,7 @@ declare namespace UptimeRobot.AlertContact {
   /** Request parameters for creating an Alert Contact */
   interface CreateRequest extends Omit<Request, 'id'> {
     /** The type of Alert Contact */
-    type: Type
+    type: AlertContactType
   }
 
   /** Request parameters for editing an Alert Contact */
@@ -275,110 +287,67 @@ declare namespace UptimeRobot.AlertContact {
 
 }
 
-declare namespace UptimeRobot.Monitor {
-
-  //#region Enums
-
-  /** The type of the monitor. */
-  enum Type {
-    http = 1,
-    https = 1,
-    keyword = 2,
-    port = 4,
-  }
-
-  /** Used only for "Port monitoring (monitor>type = 4)" and shows which
-   * pre-defined port/service is monitored or if a custom port is monitored.
+/** A log for a Monitor */
+interface Log {
+  /** type of log event */
+  type: LogType
+  /** Unix Time. The date and time of the log (inherits the user's timezone
+   * setting).
    */
-  enum SubType {
-    none = '',
-    http = 1,
-    https = 2,
-    ftp = 3,
-    smtp = 4,
-    pop3 = 5,
-    imap = 6,
-    customPort = 99,
+  datetime: number
+  /** The duration of the downtime in seconds. */
+  duration: number
+  /** the reason of the downtime (if exists). */
+  reason?: {
+    /** type of log event */
+    code: LogType
+    /** detail of log event */
+    detail: string
   }
+}
 
+/** A Monitor is akin to a scheduled task/job */
+interface Monitor {
+  id: number
+  /** The friendly name of the monitor. */
+  friendly_name: string
+  /** the URL/IP of the monitor. */
+  url: string
+  type: MonitorType
+  sub_type?: MonitorSubType
+  keyword_type?: MonitorKeywordType
   /** Used only for "Keyword monitoring (monitor>type = 2)" and shows "if the
    * monitor will be flagged as down when the keyword exists or not exists".
+   * The value of the keyword.
    */
-  enum KeywordType {
-    none = '',
-    exists = 1,
-    notExists = 2,
-  }
-
-  /** The status of the monitor. When used with the editMonitor method 0 (to
-   * pause) or 1 (to start) can be sent.
+  keyword_value?: string
+  /** Used for password-protected web pages (HTTP Basic Auth). Available for
+   * HTTP and keyword monitoring.
    */
-  enum State {
-    paused = 0,
-    new = 1,
-    up = 2,
-    warn = 8,
-    down = 9,
-  }
-
-  /** The value of the keyword. */
-  enum LogType {
-    down = 1,
-    up = 2,
-    started = 98,
-    paused = 99,
-  }
-
-  /** The HTTP method to be used */
-  enum HttpMethod {
-    head = 1,
-    get = 2,
-    post = 3,
-    put = 4,
-    patch = 5,
-    delete = 6,
-    options = 7,
-  }
-
-  /** The format of data to be sent with POST, PUT, PATCH, DELETE, OPTIONS HTTP 
-   * methods
+  http_username?: string
+  /** Used for password-protected web pages (HTTP Basic Auth). Available for
+   * HTTP and keyword monitoring.
    */
-  enum HttpMethodPostType {
-    keyValue = 1,
-    rawData = 2,
-  }
+  http_password?: string
+  /** Used only for "Port monitoring (monitor>type = 4)" and shows the port
+   * monitored.
+   */
+  port?: number
+  /** the interval for the monitoring check (300 seconds by default). */
+  interval: number
+  status: MonitorState
+  /** creation time of Monitor in unix timestamp format */
+  create_datetime: number
+  monitor_group?: number
+  /** 0 - false, 1 - true */
+  is_group_main?: 0 | 1
+  /** all events logged for this Monitor. Only available if requested
+   * (ie. ?logs=1)
+   */
+  logs?: Log[]
+}
 
-  /** The Content-Type for POST, PUT, PATCH, DELETE, OPTIONS HTTP methods */
-  enum HttpMethodContentType {
-    /** text/html */
-    html = 0,
-    /** application/json */
-    json = 1,
-  }
-
-  //#endregion
-
-  //#region Models
-
-  interface Log {
-    /** type of log event */
-    type: LogType
-    /** Unix Time. The date and time of the log (inherits the user's timezone
-     * setting).
-     */
-    datetime: number
-    /** The duration of the downtime in seconds. */
-    duration: number
-    /** the reason of the downtime (if exists). */
-    reason?: {
-      /** type of log event */
-      code: LogType
-      /** detail of log event */
-      detail: string
-    }
-  }
-
-  //#endregion
+declare namespace Monitor {
 
   //#region Requests
 
@@ -505,11 +474,11 @@ declare namespace UptimeRobot.Monitor {
     friendly_name?: string
     /** The URL/IP of the monitor */
     url?: string
-    type?: Type
-    sub_type?: SubType
+    type?: MonitorType
+    sub_type?: MonitorSubType
     /** Required for port monitoring */
     port?: number
-    keyword_type?: KeywordType
+    keyword_type?: MonitorKeywordType
     /** Required for keyword monitoring */
     keyword_value?: string
     /** In seconds */
@@ -523,18 +492,18 @@ declare namespace UptimeRobot.Monitor {
      */
     http_password?: string
     /** The HTTP method to be used */
-    http_method?: HttpMethod
+    http_method?: MonitorHttpMethod
     /** The format of data to be sent with POST, PUT, PATCH, DELETE, OPTIONS
      * HTTP methods
      */
-    post_type?: HttpMethodPostType
+    post_type?: MonitorHttpMethodPostType
     /** Must be sent as a JSON object. The data to be sent with POST, PUT,
      * PATCH, DELETE, OPTIONS HTTP methods
      */
     post_value?: string
     /** sets the Content-Type for POST, PUT, PATCH, DELETE, OPTIONS HTTP methods
     */
-    post_content_type?: HttpMethodContentType
+    post_content_type?: MonitorHttpMethodContentType
     /** The alert contacts to be notified when the monitor goes up/down.
      * Multiple alert_contact>ids can be sent like
      * alert_contacts=457_0_0-373_5_0-8956_2_3 where alert_contact>ids are
@@ -562,7 +531,7 @@ declare namespace UptimeRobot.Monitor {
     /** The URL/IP of the monitor */
     url: string
     /** The type of Monitor */
-    type: Type
+    type: MonitorType
   }
 
   /** Request parameters for editing a monitor */
@@ -622,24 +591,31 @@ declare namespace UptimeRobot.Monitor {
 
 }
 
-declare namespace UptimeRobot.MWindow {
-  //#region Enums
-
-  /** The type of the maintenance window */
-  enum Type {
-    once = 1,
-    daily = 2,
-    weekly = 3,
-    monthly = 4,
-  }
-
+/** A maintenance window */
+interface MWindow {
+  id: number
+  /** TODO: the property "user" has no description in official docs */
+  user: number
+  type: MWindowType
+  /** Friendly name of the maintenance window (for making it easier to
+   * distinguish from others)
+   */
+  friendly_name: string
+  /** Start time of the maintenance windows. Unix time for type=1 and HH:mm for
+   * other types
+   */
+  start_time: string
+  /** Duration of the maintenance windows in minutes */
+  duration: number
+  /** Seperated with "-" and used only for weekly and monthly maintenance 
+   * windows
+   */
+  value: string
   /** The status of the maintenance window. 0 - paused or 1 - active */
-  enum State {
-    paused,
-    active
-  }
+  status: MWindowState
+}
 
-  //#endregion
+declare namespace MWindow {
 
   //#region Requests
 
@@ -660,7 +636,7 @@ declare namespace UptimeRobot.MWindow {
     /** The Id of the maintenance window */
     id?: number
     /** The type of maintenance window */
-    type?: Type
+    type?: MWindowType
     /** Friendly name of the maintenance window (for making it easier to 
      * distinguish from others)
      */
@@ -680,7 +656,7 @@ declare namespace UptimeRobot.MWindow {
 
   interface CreateRequest extends Omit<Request, 'id'> {
     /** The type of maintenance window */
-    type: Type
+    type: MWindowType
     /** Friendly name of the maintenance window (for making it easier to 
      * distinguish from others)
      */
@@ -735,37 +711,26 @@ declare namespace UptimeRobot.MWindow {
 
 }
 
-declare namespace UptimeRobot.PSP {
-
-  //#region Enums
-
+/** a public status page */
+interface PSP {
+  id: number
+  /** Friendly name of the status page (for making it easier to distinguish from
+   *  others) */
+  friendly_name: string
+  /** The list of monitorIDs to be displayed in status page (the values are 
+   * seperated with "-" or 0 for all monitors) */
+  monitors: string
+  /** The sort order of the status page */
+  sort: PSPSort
   /** The status of the status page. 0 - paused or 1 - active */
-  enum State {
-    paused,
-    active
-  }
-
-  /** The sorting of the status page */
-  enum Sort {
-    /** friendly name (a-z) */
-    friendlyNameAsc = 1,
-    /** friendly name (z-a) */
-    friendlyNameDesc = 2,
-    /** status (up-down-paused) */
-    statusDesc = 3,
-    /** status (down-up-paused) */
-    statusAsc = 4,
-  }
-
-  /** Sets the type of status page */
-  enum Type {
-    /** for all monitors */
-    all = 1,
-    /** for selected monitors */
-    custom = 2
-  }
-
-  //#endregion
+  status: PSPState
+  /** The uptimerobot.com hosted url eg. https://stats.uptimerobot.com/12345 */
+  standard_url: string
+  /** The domain or subdomain that the status page will run on. eg.
+   * "https://status.mydomain.com" */
+  custom_url: string
+}
+declare namespace PSP {
 
   //#region Requests
 
@@ -784,7 +749,7 @@ declare namespace UptimeRobot.PSP {
     /** The Id of the status page */
     id?: number
     /** The type of status page */
-    type?: Type
+    type?: PSPType
     /** Friendly name of the status page (for making it easier to distinguish from
      *  others) */
     friendly_name?: string
@@ -797,17 +762,17 @@ declare namespace UptimeRobot.PSP {
     /** require this password to access the status page */
     password?: string
     /** Sort monitors on the status page */
-    sort?: Sort
+    sort?: PSPSort
     /** PRO: For hiding the Uptime Robot links and only available in the Pro 
      * Plan. 0 - false or 1 - true */
     hide_url_links?: 0 | 1
     /** Sets the state of the status page */
-    status?: State
+    status?: PSPState
   }
 
   interface CreateRequest extends Omit<Request, 'id'> {
     /** The type of status page */
-    type: Type
+    type: PSPType
     /** Friendly name of the status page (for making it easier to distinguish from
      *  others) */
     friendly_name: string
@@ -816,8 +781,7 @@ declare namespace UptimeRobot.PSP {
     monitors: string
   }
 
-  interface EditRequest extends Omit<
-    Request, 'type'> {
+  interface EditRequest extends Omit<Request, 'type'> {
     /** The Id of the status page */
     id: number
   }

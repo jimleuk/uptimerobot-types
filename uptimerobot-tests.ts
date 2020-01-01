@@ -1,37 +1,65 @@
-const pagination: UptimeRobot.Pagination = {
+import {
+  Stat,
+  Pagination,
+  ErrorResponse,
+  ErrorType,
+  LogType,
+  AlertContactType,
+  AlertContactState,
+  MonitorType,
+  MonitorSubType,
+  MonitorState,
+  MonitorKeywordType,
+  MonitorHttpMethod,
+  MonitorHttpMethodContentType,
+  MonitorHttpMethodPostType,
+  MWindowType,
+  MWindowState,
+  PSPSort,
+  PSPState,
+  PSPType,
+  Log,
+  Account,
+  AlertContact,
+  Monitor,
+  MWindow,
+  PSP,
+} from '.';
+
+const pagination: Pagination = {
   limit: 1,
   offset: 2,
   total: 3,
 };
 
-const errorResponse: UptimeRobot.ErrorResponse = {
-  stat: UptimeRobot.Stat.ok,
+const errorResponse: ErrorResponse = {
+  stat: Stat.ok,
   error: {
-    type: UptimeRobot.ErrorType.invalidParameter,
+    type: ErrorType.invalidParameter,
     parameter_name: 'api_key',
   },
 };
 
-const errorResponse2: UptimeRobot.ErrorResponse = {
-  stat: UptimeRobot.Stat.ok,
+const errorResponse2: ErrorResponse = {
+  stat: Stat.ok,
   error: {
-    type: UptimeRobot.ErrorType.invalidParameter,
+    type: ErrorType.invalidParameter,
     parameter_name: 'api_key',
     passed_value: 'abc123',
   },
 };
 
-const errorResponse3: UptimeRobot.ErrorResponse = {
-  stat: UptimeRobot.Stat.ok,
+const errorResponse3: ErrorResponse = {
+  stat: Stat.ok,
   error: {
-    type: UptimeRobot.ErrorType.invalidParameter,
+    type: ErrorType.invalidParameter,
     parameter_name: 'api_key',
     passed_value: 'abc123',
     message: 'This parameter is invalid',
   },
 };
 
-const account: UptimeRobot.Account = {
+const account: Account = {
   email: 'jim@example.com',
   monitor_limit: 10,
   monitor_interval: 5000,
@@ -40,134 +68,127 @@ const account: UptimeRobot.Account = {
   paused_monitors: 0,
 };
 
-const alertContact: UptimeRobot.AlertContact = {
+const alertContact: AlertContact = {
   id: 0,
   friendly_name: 'myAlert',
-  type: UptimeRobot.AlertContact.Type.email,
-  status: UptimeRobot.AlertContact.State.pending,
+  type: AlertContactType.email,
+  status: AlertContactState.pending,
   value: 'jim@example.com',
 };
 
-const alertContactRequest: UptimeRobot.AlertContact.ListRequest = {
+const alertContactRequest: AlertContact.ListRequest = {
   alert_contacts: '0',
   offset: 0,
   limit: 50,
 };
 
-const alertContactRequest2: UptimeRobot.AlertContact.ListRequest = {
+const alertContactRequest2: AlertContact.ListRequest = {
   offset: 0,
   limit: 50,
 };
 
-const alertContactResponse: UptimeRobot.AlertContact.ListResponse = {
-  stat: UptimeRobot.Stat.ok,
+const alertContactResponse: AlertContact.ListResponse = {
+  stat: Stat.ok,
   offset: 0,
   limit: 50,
   total: 10,
   alert_contacts: [alertContact],
 };
 
-const createAlertContactRequest: UptimeRobot.AlertContact.CreateRequest = {
-  type: UptimeRobot.AlertContact.Type.email,
+const createAlertContactRequest: AlertContact.CreateRequest = {
+  type: AlertContactType.email,
   friendly_name: 'MyAlertContact',
   value: 'jim@example.com',
 };
 
-const createAlertContactResponse: UptimeRobot.AlertContact.CreateResponse = {
-  stat: UptimeRobot.Stat.ok,
+const createAlertContactResponse: AlertContact.CreateResponse = {
+  stat: Stat.ok,
   alertcontact: alertContact,
 };
 
-const editAlertContactRequest1: UptimeRobot.AlertContact.EditRequest = {
+const editAlertContactRequest1: AlertContact.EditRequest = {
   id: 0,
   friendly_name: 'MyAlertContact2',
   value: 'jim@example.com2',
 };
 
-const editAlertContactRequest2: UptimeRobot.AlertContact.EditRequest = {
+const editAlertContactRequest2: AlertContact.EditRequest = {
   id: 0,
 };
 
-const editAlertContactResponse1: UptimeRobot.AlertContact.EditResponse = {
-  stat: UptimeRobot.Stat.ok,
+const editAlertContactResponse1: AlertContact.EditResponse = {
+  stat: Stat.ok,
   alertcontact: alertContact,
 };
 
-const editAlertContactResponse2: UptimeRobot.AlertContact.EditResponse = {
-  stat: UptimeRobot.Stat.ok,
+const editAlertContactResponse2: AlertContact.EditResponse = {
+  stat: Stat.ok,
   alertcontact: { id: 0 },
 };
 
-const deleteAlertContactRequest: UptimeRobot.AlertContact.DeleteRequest = {
+const deleteAlertContactRequest: AlertContact.DeleteRequest = {
   id: 0,
 };
 
-const deleteAlertContactResponse1: UptimeRobot.AlertContact.DeleteResponse = {
-  stat: UptimeRobot.Stat.ok,
+const deleteAlertContactResponse1: AlertContact.DeleteResponse = {
+  stat: Stat.ok,
   alertcontact: alertContact,
 };
 
-const deleteAlertContactResponse2: UptimeRobot.AlertContact.DeleteResponse = {
-  stat: UptimeRobot.Stat.ok,
+const deleteAlertContactResponse2: AlertContact.DeleteResponse = {
+  stat: Stat.ok,
   alertcontact: { id: 0 },
 };
 
-const log1: UptimeRobot.Monitor.Log = {
-  type: UptimeRobot.Monitor.LogType.started,
+const log1: Log = {
+  type: LogType.started,
   datetime: 1234567890,
   duration: 5000,
   reason: {
-    code: UptimeRobot.Monitor.LogType.started,
+    code: LogType.started,
     detail: 'This monitor was started',
   },
 };
 
-const log2: UptimeRobot.Monitor.Log = {
-  type: UptimeRobot.Monitor.LogType.started,
+const log2: Log = {
+  type: LogType.started,
   datetime: 1234567890,
   duration: 5000,
 };
 
-const monitor1: UptimeRobot.Monitor = {
+const monitor1: Monitor = {
   id: 0,
   friendly_name: 'myMonitor',
   url: 'https://example.com',
-  type: UptimeRobot.Monitor.Type.https,
-  sub_type: UptimeRobot.Monitor.SubType.none,
-  keyword_type: UptimeRobot.Monitor.KeywordType.none,
+  type: MonitorType.https,
+  sub_type: MonitorSubType.none,
+  keyword_type: MonitorKeywordType.none,
   keyword_value: 'myKeyword',
   http_username: 'admin',
   http_password: '',
   port: 80,
   interval: 500,
-  status: UptimeRobot.Monitor.State.new,
+  status: MonitorState.new,
   create_datetime: 1234567890,
   monitor_group: 0,
   is_group_main: 0,
   logs: [log1, log2],
 };
 
-const monitor2: UptimeRobot.Monitor = {
+const monitor2: Monitor = {
   id: 0,
   friendly_name: 'myMonitor',
   url: 'https://example.com',
-  type: UptimeRobot.Monitor.Type.https,
+  type: MonitorType.https,
   interval: 500,
-  status: UptimeRobot.Monitor.State.new,
+  status: MonitorState.new,
   create_datetime: 1234567890,
 };
 
-const monitorListRequest1: UptimeRobot.Monitor.ListRequest = {
+const monitorListRequest1: Monitor.ListRequest = {
   monitors: '0',
-  types: [
-    UptimeRobot.Monitor.Type.http,
-    UptimeRobot.Monitor.Type.https,
-    UptimeRobot.Monitor.Type.keyword,
-  ].join('-'),
-  statuses: [
-    UptimeRobot.Monitor.State.warn,
-    UptimeRobot.Monitor.State.down,
-  ].join('-'),
+  types: [MonitorType.http, MonitorType.https, MonitorType.keyword].join('-'),
+  statuses: [MonitorState.warn, MonitorState.down].join('-'),
   custom_uptime_ratios: '7-30-45',
   custom_uptime_ranges: '1465440758_1466304758-1434682358_1434855158',
   all_time_uptime_ratio: 0,
@@ -175,10 +196,7 @@ const monitorListRequest1: UptimeRobot.Monitor.ListRequest = {
   logs: 1,
   logs_start_date: 1234567890,
   logs_end_date: 1234567890,
-  log_types: [
-    UptimeRobot.Monitor.LogType.down,
-    UptimeRobot.Monitor.LogType.paused,
-  ].join('-'),
+  log_types: [LogType.down, LogType.paused].join('-'),
   logs_limit: 50,
   response_times: 0,
   response_times_limit: 100,
@@ -196,103 +214,103 @@ const monitorListRequest1: UptimeRobot.Monitor.ListRequest = {
   search: 'myMonitor',
 };
 
-const monitorListRequest2: UptimeRobot.Monitor.ListRequest = {};
+const monitorListRequest2: Monitor.ListRequest = {};
 
-const monitorListResponse: UptimeRobot.Monitor.ListResponse = {
-  stat: UptimeRobot.Stat.ok,
+const monitorListResponse: Monitor.ListResponse = {
+  stat: Stat.ok,
   pagination,
   monitors: [monitor1, monitor2],
 };
 
-const createMonitorRequest1: UptimeRobot.Monitor.CreateRequest = {
+const createMonitorRequest1: Monitor.CreateRequest = {
   friendly_name: 'myMonitor',
   url: 'https://example.com',
-  type: UptimeRobot.Monitor.Type.https,
-  sub_type: UptimeRobot.Monitor.SubType.none,
+  type: MonitorType.https,
+  sub_type: MonitorSubType.none,
   port: 80,
-  keyword_type: UptimeRobot.Monitor.KeywordType.none,
+  keyword_type: MonitorKeywordType.none,
   keyword_value: 'myKeyword',
   interval: 5000,
   http_username: 'admin',
   http_password: '',
-  http_method: UptimeRobot.Monitor.HttpMethod.get,
-  post_type: UptimeRobot.Monitor.HttpMethodPostType.keyValue,
+  http_method: MonitorHttpMethod.get,
+  post_type: MonitorHttpMethodPostType.keyValue,
   post_value: 'myPostValue',
-  post_content_type: UptimeRobot.Monitor.HttpMethodContentType.json,
+  post_content_type: MonitorHttpMethodContentType.json,
   alert_contacts: '0-1-2',
   custom_http_headers: 'myCustomHttpHeaders',
   custom_http_statuses: 'myCustomHttpStatuses',
   ignore_ssl_errors: 0,
 };
 
-const createMonitorRequest2: UptimeRobot.Monitor.CreateRequest = {
+const createMonitorRequest2: Monitor.CreateRequest = {
   friendly_name: 'myMonitor',
   url: 'https://example.com',
-  type: UptimeRobot.Monitor.Type.https,
+  type: MonitorType.https,
 };
 
-const createMonitorResponse: UptimeRobot.Monitor.CreateResponse = {
-  stat: UptimeRobot.Stat.ok,
+const createMonitorResponse: Monitor.CreateResponse = {
+  stat: Stat.ok,
   monitor: {
     id: 0,
-    status: UptimeRobot.Monitor.State.new,
+    status: MonitorState.new,
   },
 };
 
-const editMonitorRequest1: UptimeRobot.Monitor.EditRequest = {
+const editMonitorRequest1: Monitor.EditRequest = {
   id: 0,
   friendly_name: 'myMonitor',
   url: 'https://example.com',
-  sub_type: UptimeRobot.Monitor.SubType.none,
+  sub_type: MonitorSubType.none,
   port: 80,
-  keyword_type: UptimeRobot.Monitor.KeywordType.none,
+  keyword_type: MonitorKeywordType.none,
   keyword_value: 'myKeyword',
   interval: 5000,
   http_username: 'admin',
   http_password: '',
-  http_method: UptimeRobot.Monitor.HttpMethod.get,
-  post_type: UptimeRobot.Monitor.HttpMethodPostType.keyValue,
+  http_method: MonitorHttpMethod.get,
+  post_type: MonitorHttpMethodPostType.keyValue,
   post_value: 'myPostValue',
-  post_content_type: UptimeRobot.Monitor.HttpMethodContentType.json,
+  post_content_type: MonitorHttpMethodContentType.json,
   alert_contacts: '0-1-2',
   custom_http_headers: 'myCustomHttpHeaders',
   custom_http_statuses: 'myCustomHttpStatuses',
   ignore_ssl_errors: 0,
 };
 
-const editMonitorRequest2: UptimeRobot.Monitor.EditRequest = {
+const editMonitorRequest2: Monitor.EditRequest = {
   id: 0,
   friendly_name: 'myMonitor',
   url: 'https://example.com',
 };
 
-const editMonitorResponse: UptimeRobot.Monitor.EditResponse = {
-  stat: UptimeRobot.Stat.ok,
+const editMonitorResponse: Monitor.EditResponse = {
+  stat: Stat.ok,
   monitor: { id: 0 },
 };
 
-const deleteMonitorRequest: UptimeRobot.Monitor.DeleteRequest = {
+const deleteMonitorRequest: Monitor.DeleteRequest = {
   id: 0,
 };
 
-const deleteMonitorResponse: UptimeRobot.Monitor.DeleteResponse = {
-  stat: UptimeRobot.Stat.ok,
+const deleteMonitorResponse: Monitor.DeleteResponse = {
+  stat: Stat.ok,
   monitor: { id: 0 },
 };
 
-const resetMonitorRequest: UptimeRobot.Monitor.ResetRequest = {
+const resetMonitorRequest: Monitor.ResetRequest = {
   id: 0,
 };
 
-const resetMonitorResponse: UptimeRobot.Monitor.ResetResponse = {
-  stat: UptimeRobot.Stat.ok,
+const resetMonitorResponse: Monitor.ResetResponse = {
+  stat: Stat.ok,
   monitor: { id: 0 },
 };
 
-const mWindow: UptimeRobot.MWindow = {
+const mWindow: MWindow = {
   id: 0,
   user: 0,
-  type: UptimeRobot.MWindow.Type.weekly,
+  type: MWindowType.weekly,
   friendly_name: 'myMWindow',
   start_time: '00:00',
   duration: 5000,
@@ -300,46 +318,46 @@ const mWindow: UptimeRobot.MWindow = {
   status: 0,
 };
 
-const mWindowRequest1: UptimeRobot.MWindow.ListRequest = {
+const mWindowRequest1: MWindow.ListRequest = {
   mwindows: '0-1-2',
   offset: 0,
   limit: 50,
 };
 
-const mWindowRequest2: UptimeRobot.MWindow.ListRequest = {
+const mWindowRequest2: MWindow.ListRequest = {
   offset: 0,
   limit: 50,
 };
 
-const mWindowResponse: UptimeRobot.MWindow.ListResponse = {
-  stat: UptimeRobot.Stat.ok,
+const mWindowResponse: MWindow.ListResponse = {
+  stat: Stat.ok,
   pagination,
   mwindows: [mWindow],
 };
 
-const createMWindowRequest1: UptimeRobot.MWindow.CreateRequest = {
+const createMWindowRequest1: MWindow.CreateRequest = {
   friendly_name: 'myMWindow',
-  type: UptimeRobot.MWindow.Type.weekly,
+  type: MWindowType.weekly,
   value: '1',
   duration: 5000,
   start_time: '00:00',
 };
 
-const createMWindowRequest2: UptimeRobot.MWindow.CreateRequest = {
+const createMWindowRequest2: MWindow.CreateRequest = {
   friendly_name: 'myMWindow',
-  type: UptimeRobot.MWindow.Type.weekly,
+  type: MWindowType.weekly,
   value: '1',
 };
 
-const createMWindowResponse: UptimeRobot.MWindow.CreateResponse = {
-  stat: UptimeRobot.Stat.ok,
+const createMWindowResponse: MWindow.CreateResponse = {
+  stat: Stat.ok,
   mwindow: {
     id: 0,
-    status: UptimeRobot.MWindow.State.active,
+    status: MWindowState.active,
   },
 };
 
-const editMWindowRequest1: UptimeRobot.MWindow.EditRequest = {
+const editMWindowRequest1: MWindow.EditRequest = {
   id: 0,
   friendly_name: 'myMWindow',
   value: '1',
@@ -347,102 +365,102 @@ const editMWindowRequest1: UptimeRobot.MWindow.EditRequest = {
   start_time: '00:00',
 };
 
-const editMWindowRequest2: UptimeRobot.MWindow.EditRequest = {
+const editMWindowRequest2: MWindow.EditRequest = {
   id: 0,
 };
 
-const editMWindowResponse: UptimeRobot.MWindow.EditResponse = {
-  stat: UptimeRobot.Stat.ok,
+const editMWindowResponse: MWindow.EditResponse = {
+  stat: Stat.ok,
   mwindow: { id: 0 },
 };
 
-const deleteMWindowRequest2: UptimeRobot.MWindow.DeleteRequest = {
+const deleteMWindowRequest2: MWindow.DeleteRequest = {
   id: 0,
 };
 
-const deleteMWindowResponse: UptimeRobot.MWindow.DeleteResponse = {
-  stat: UptimeRobot.Stat.ok,
+const deleteMWindowResponse: MWindow.DeleteResponse = {
+  stat: Stat.ok,
   mwindow: { id: 0 },
 };
 
-const psp: UptimeRobot.PSP = {
+const psp: PSP = {
   id: 0,
   friendly_name: 'myPsp',
   monitors: '0-1-2',
-  sort: UptimeRobot.PSP.Sort.friendlyNameAsc,
-  status: UptimeRobot.PSP.State.active,
+  sort: PSPSort.friendlyNameAsc,
+  status: PSPState.active,
   standard_url: 'https://example.com',
   custom_url: 'https://custom.example.com',
 };
 
-const pspRequest1: UptimeRobot.PSP.ListRequest = {
+const pspRequest1: PSP.ListRequest = {
   psps: '0-1-2',
   offset: 0,
   limit: 50,
 };
 
-const pspRequest2: UptimeRobot.PSP.ListRequest = {
+const pspRequest2: PSP.ListRequest = {
   offset: 0,
   limit: 50,
 };
 
-const pspResponse: UptimeRobot.PSP.ListResponse = {
-  stat: UptimeRobot.Stat.ok,
+const pspResponse: PSP.ListResponse = {
+  stat: Stat.ok,
   offset: 0,
   limit: 50,
   total: 10,
   psps: [psp],
 };
 
-const createPspRequest1: UptimeRobot.PSP.CreateRequest = {
+const createPspRequest1: PSP.CreateRequest = {
   friendly_name: 'myPsp',
   monitors: '0-1-2',
-  type: UptimeRobot.PSP.Type.all,
+  type: PSPType.all,
   custom_domain: 'https://example.com',
   hide_url_links: 1,
   password: '',
-  sort: UptimeRobot.PSP.Sort.friendlyNameAsc,
-  status: UptimeRobot.PSP.State.active,
+  sort: PSPSort.friendlyNameAsc,
+  status: PSPState.active,
 };
 
-const createPspRequest2: UptimeRobot.PSP.CreateRequest = {
+const createPspRequest2: PSP.CreateRequest = {
   friendly_name: 'myPsp',
   monitors: '0-1-2',
-  type: UptimeRobot.PSP.Type.all,
+  type: PSPType.all,
 };
 
-const createPspResponse: UptimeRobot.PSP.CreateResponse = {
-  stat: UptimeRobot.Stat.ok,
+const createPspResponse: PSP.CreateResponse = {
+  stat: Stat.ok,
   psp: { id: 0 },
 };
 
-const editPspRequest1: UptimeRobot.PSP.EditRequest = {
+const editPspRequest1: PSP.EditRequest = {
   id: 0,
   friendly_name: 'myPsp',
   monitors: '0-1-2',
   custom_domain: 'https://example.com',
   hide_url_links: 1,
   password: '',
-  sort: UptimeRobot.PSP.Sort.friendlyNameAsc,
-  status: UptimeRobot.PSP.State.active,
+  sort: PSPSort.friendlyNameAsc,
+  status: PSPState.active,
 };
 
-const editPspRequest2: UptimeRobot.PSP.EditRequest = {
+const editPspRequest2: PSP.EditRequest = {
   id: 0,
   friendly_name: 'myPsp',
   monitors: '0-1-2',
 };
 
-const editPspResponse: UptimeRobot.PSP.EditResponse = {
-  stat: UptimeRobot.Stat.ok,
+const editPspResponse: PSP.EditResponse = {
+  stat: Stat.ok,
   psp: { id: 0 },
 };
 
-const deletePspRequest2: UptimeRobot.PSP.DeleteRequest = {
+const deletePspRequest2: PSP.DeleteRequest = {
   id: 0,
 };
 
-const deletePspResponse: UptimeRobot.PSP.DeleteResponse = {
-  stat: UptimeRobot.Stat.ok,
+const deletePspResponse: PSP.DeleteResponse = {
+  stat: Stat.ok,
   psp: { id: 0 },
 };
