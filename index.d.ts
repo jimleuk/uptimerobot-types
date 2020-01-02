@@ -63,9 +63,9 @@ declare namespace Uptimerobot {
      */
     alert_contacts?: string;
     /** Used for pagination */
-    offset: number;
+    offset?: number;
     /** Used for pagination */
-    limit: number;
+    limit?: number;
   }
 
   /** Request parameters for creating or editing an Alert Contact */
@@ -455,9 +455,9 @@ declare namespace Uptimerobot {
      */
     mwindows?: string;
     /** Used for pagination */
-    offset: number;
+    offset?: number;
     /** Used for pagination */
-    limit: number;
+    limit?: number;
   }
 
   export interface MWindowRequest {
@@ -561,9 +561,9 @@ declare namespace Uptimerobot {
      */
     psps?: string;
     /** Used for Pagination */
-    offset: number;
+    offset?: number;
     /** Used for Pagination */
-    limit: number;
+    limit?: number;
   }
 
   export interface PSPRequest {
