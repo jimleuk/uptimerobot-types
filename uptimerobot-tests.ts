@@ -115,6 +115,8 @@ const accountListResponse: AccountListResponse = {
   account,
 }
 
+const accountListResponse1: AccountListResponse = errorResponse
+
 const alertContact: AlertContact = {
   id: 0,
   friendly_name: 'myAlert',
@@ -142,6 +144,8 @@ const alertContactResponse: AlertContactListResponse = {
   alert_contacts: [alertContact],
 };
 
+const alertContactResponse1: AlertContactListResponse = errorResponse
+
 const createAlertContactRequest: AlertContactCreateRequest = {
   type: AlertContactType.email,
   friendly_name: 'MyAlertContact',
@@ -152,6 +156,8 @@ const createAlertContactResponse: AlertContactCreateResponse = {
   stat: Stat.ok,
   alertcontact: alertContact,
 };
+
+const createAlertContactResponse1: AlertContactCreateResponse = errorResponse
 
 const editAlertContactRequest1: AlertContactEditRequest = {
   id: 0,
@@ -173,6 +179,8 @@ const editAlertContactResponse2: AlertContactEditResponse = {
   alertcontact: { id: 0 },
 };
 
+const editAlertContactResponse3: AlertContactEditResponse = errorResponse
+
 const deleteAlertContactRequest: AlertContactDeleteRequest = {
   id: 0,
 };
@@ -186,6 +194,8 @@ const deleteAlertContactResponse2: AlertContactDeleteResponse = {
   stat: Stat.ok,
   alertcontact: { id: 0 },
 };
+
+const deleteAlertContactResponse3: AlertContactDeleteResponse = errorResponse
 
 const log1: Log = {
   type: LogType.started,
@@ -269,6 +279,8 @@ const monitorListResponse: MonitorListResponse = {
   monitors: [monitor1, monitor2],
 };
 
+const monitorListResponse1: MonitorListResponse = errorResponse
+
 const createMonitorRequest1: MonitorCreateRequest = {
   friendly_name: 'myMonitor',
   url: 'https://example.com',
@@ -304,6 +316,8 @@ const createMonitorResponse: MonitorCreateResponse = {
   },
 };
 
+const createMonitorResponse1: MonitorCreateResponse = errorResponse
+
 const editMonitorRequest1: MonitorEditRequest = {
   id: 0,
   friendly_name: 'myMonitor',
@@ -336,6 +350,8 @@ const editMonitorResponse: MonitorEditResponse = {
   monitor: { id: 0 },
 };
 
+const editMonitorResponse1: MonitorEditResponse = errorResponse
+
 const deleteMonitorRequest: MonitorDeleteRequest = {
   id: 0,
 };
@@ -345,6 +361,8 @@ const deleteMonitorResponse: MonitorDeleteResponse = {
   monitor: { id: 0 },
 };
 
+const deleteMonitorResponse1: MonitorDeleteResponse = errorResponse
+
 const resetMonitorRequest: MonitorResetRequest = {
   id: 0,
 };
@@ -353,6 +371,8 @@ const resetMonitorResponse: MonitorResetResponse = {
   stat: Stat.ok,
   monitor: { id: 0 },
 };
+
+const resetMonitorResponse1: MonitorResetResponse = errorResponse
 
 const mWindow: MWindow = {
   id: 0,
@@ -382,6 +402,8 @@ const mWindowResponse: MWindowListResponse = {
   mwindows: [mWindow],
 };
 
+const mWindowResponse1: MWindowListResponse = errorResponse
+
 const createMWindowRequest1: MWindowCreateRequest = {
   friendly_name: 'myMWindow',
   type: MWindowType.weekly,
@@ -404,6 +426,8 @@ const createMWindowResponse: MWindowCreateResponse = {
   },
 };
 
+const createMWindowResponse1: MWindowCreateResponse = errorResponse;
+
 const editMWindowRequest1: MWindowEditRequest = {
   id: 0,
   friendly_name: 'myMWindow',
@@ -421,6 +445,8 @@ const editMWindowResponse: MWindowEditResponse = {
   mwindow: { id: 0 },
 };
 
+const editMWindowResponse1: MWindowEditResponse = errorResponse
+
 const deleteMWindowRequest2: MWindowDeleteRequest = {
   id: 0,
 };
@@ -429,6 +455,8 @@ const deleteMWindowResponse: MWindowDeleteResponse = {
   stat: Stat.ok,
   mwindow: { id: 0 },
 };
+
+const deleteMWindowResponse1: MWindowDeleteResponse = errorResponse
 
 const psp: PSP = {
   id: 0,
@@ -459,6 +487,8 @@ const pspResponse: PSPListResponse = {
   psps: [psp],
 };
 
+const pspResponse1: PSPListResponse = errorResponse
+
 const createPspRequest1: PSPCreateRequest = {
   friendly_name: 'myPsp',
   monitors: '0-1-2',
@@ -480,6 +510,8 @@ const createPspResponse: PSPCreateResponse = {
   stat: Stat.ok,
   psp: { id: 0 },
 };
+
+const createPspResponse1: PSPCreateResponse = errorResponse
 
 const editPspRequest1: PSPEditRequest = {
   id: 0,
@@ -503,6 +535,8 @@ const editPspResponse: PSPEditResponse = {
   psp: { id: 0 },
 };
 
+const editPspResponse1: PSPEditResponse = errorResponse
+
 const deletePspRequest2: PSPDeleteRequest = {
   id: 0,
 };
@@ -511,3 +545,5 @@ const deletePspResponse: PSPDeleteResponse = {
   stat: Stat.ok,
   psp: { id: 0 },
 };
+
+const deletePspResponse1: PSPDeleteResponse = errorResponse

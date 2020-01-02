@@ -110,7 +110,7 @@ declare namespace Uptimerobot {
   }
 
   /** Response object for a paginated list of Alert Contacts */
-  export interface AlertContactListResponse {
+  export interface AlertContactListSuccessResponse {
     stat: 'ok' | 'fail'
     limit: number;
     offset: number;
@@ -119,19 +119,19 @@ declare namespace Uptimerobot {
   }
 
   /** Response object when creating an Alert Contact */
-  export interface AlertContactCreateResponse {
+  export interface AlertContactCreateSuccessResponse {
     stat: 'ok' | 'fail'
     alertcontact: Pick<AlertContact, 'id' | 'status'>;
   }
 
   /** Response object when editing an Alert Contact */
-  export interface AlertContactEditResponse {
+  export interface AlertContactEditSuccessResponse {
     stat: 'ok' | 'fail'
     alertcontact: Pick<AlertContact, 'id'>;
   }
 
   /** Response object when deleting an Alert Contact */
-  export interface AlertContactDeleteResponse {
+  export interface AlertContactDeleteSuccessResponse {
     stat: 'ok' | 'fail'
     alertcontact: Pick<AlertContact, 'id'>;
   }
@@ -398,32 +398,32 @@ declare namespace Uptimerobot {
   }
 
   /** Response object for a paginated list of Monitors */
-  export interface MonitorListResponse {
+  export interface MonitorListSuccessResponse {
     stat: 'ok' | 'fail'
     pagination: Pagination;
     monitors: Monitor[];
   }
 
   /** Response object when creating a Monitor */
-  export interface MonitorCreateResponse {
+  export interface MonitorCreateSuccessResponse {
     stat: 'ok' | 'fail'
     monitor: Pick<Monitor, 'id' | 'status'>;
   }
 
   /** Response object when editing a Monitor */
-  export interface MonitorEditResponse {
+  export interface MonitorEditSuccessResponse {
     stat: 'ok' | 'fail'
     monitor: Pick<Monitor, 'id'>;
   }
 
   /** Response object when deleting a Monitor */
-  export interface MonitorDeleteResponse {
+  export interface MonitorDeleteSuccessResponse {
     stat: 'ok' | 'fail'
     monitor: Pick<Monitor, 'id'>;
   }
 
   /** Response object when resetting a Monitor */
-  export interface MonitorResetResponse {
+  export interface MonitorResetSuccessResponse {
     stat: 'ok' | 'fail'
     monitor: Pick<Monitor, 'id'>;
   }
@@ -512,26 +512,26 @@ declare namespace Uptimerobot {
   }
 
   /** Response object for a paginated list of Maintenance Windows */
-  export interface MWindowListResponse {
+  export interface MWindowListSuccessResponse {
     stat: 'ok' | 'fail'
     pagination: Pagination;
     mwindows: MWindow[];
   }
 
   /** Response object for creating a Maintenance Window */
-  export interface MWindowCreateResponse {
+  export interface MWindowCreateSuccessResponse {
     stat: 'ok' | 'fail'
     mwindow: Pick<MWindow, 'id' | 'status'>;
   }
 
   /** Response object for editing a Maintenance Window */
-  export interface MWindowEditResponse {
+  export interface MWindowEditSuccessResponse {
     stat: 'ok' | 'fail'
     mwindow: Pick<MWindow, 'id'>;
   }
 
   /** Response object for deleting a Maintenance Window */
-  export interface MWindowDeleteResponse {
+  export interface MWindowDeleteSuccessResponse {
     stat: 'ok' | 'fail'
     mwindow: Pick<MWindow, 'id'>;
   }
@@ -624,7 +624,7 @@ declare namespace Uptimerobot {
   }
 
   /** Response object for a paginated list of public status pages */
-  export interface PSPListResponse {
+  export interface PSPListSuccessResponse {
     stat: 'ok' | 'fail'
     limit: number;
     offset: number;
@@ -633,20 +633,39 @@ declare namespace Uptimerobot {
   }
 
   /** Response object for creating a public status page */
-  export interface PSPCreateResponse {
+  export interface PSPCreateSuccessResponse {
     stat: 'ok' | 'fail'
     psp: Pick<PSP, 'id'>;
   }
+
   /** Response object for editing a public status page */
-  export interface PSPEditResponse {
+  export interface PSPEditSuccessResponse {
     stat: 'ok' | 'fail'
     psp: Pick<PSP, 'id'>;
   }
 
   /** Response object for deleting a public status page */
-  export interface PSPDeleteResponse {
+  export interface PSPDeleteSuccessResponse {
     stat: 'ok' | 'fail'
     psp: Pick<PSP, 'id'>;
   }
 
+  export type AccountListResponse = AccountListSuccessResponse | ErrorResponse
+  export type AlertContactListResponse = AlertContactListSuccessResponse | ErrorResponse
+  export type AlertContactCreateResponse = AlertContactCreateSuccessResponse | ErrorResponse
+  export type AlertContactEditResponse = AlertContactEditSuccessResponse | ErrorResponse
+  export type AlertContactDeleteResponse = AlertContactDeleteSuccessResponse | ErrorResponse
+  export type MonitorListResponse = MonitorListSuccessResponse | ErrorResponse
+  export type MonitorCreateResponse = MonitorCreateSuccessResponse | ErrorResponse
+  export type MonitorEditResponse = MonitorEditSuccessResponse | ErrorResponse
+  export type MonitorDeleteResponse = MonitorDeleteSuccessResponse | ErrorResponse
+  export type MonitorResetResponse = MonitorResetSuccessResponse | ErrorResponse
+  export type MWindowListResponse = MWindowListSuccessResponse | ErrorResponse
+  export type MWindowCreateResponse = MWindowCreateSuccessResponse | ErrorResponse
+  export type MWindowEditResponse = MWindowEditSuccessResponse | ErrorResponse
+  export type MWindowDeleteResponse = MWindowDeleteSuccessResponse | ErrorResponse
+  export type PSPListResponse = PSPListSuccessResponse | ErrorResponse
+  export type PSPCreateResponse = PSPCreateSuccessResponse | ErrorResponse
+  export type PSPEditResponse = PSPEditSuccessResponse | ErrorResponse
+  export type PSPDeleteResponse = PSPDeleteSuccessResponse | ErrorResponse
 }
