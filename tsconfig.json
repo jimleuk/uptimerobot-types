@@ -5,8 +5,9 @@
     "outDir": "build"
   },
   "files": [
-    "index.ts",
-    "uptimerobot-tests.ts"
+    "index.d.ts",
+    "uptimerobot-tests.ts",
+    "enums.ts",
   ],
   "noEmit": true
 }

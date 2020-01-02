@@ -1,6 +1,6 @@
 {
   "name": "@types/uptimerobot",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Type definitions for api.uptimerobot.com",
   "main": "./index.ts",
   "types": "./index.ts",

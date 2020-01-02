@@ -1,23 +1,18 @@
 # @types/uptimerobot
-
-* Types for [api.uptimerobot.com](https://uptimerobot.com) v2
-* Includes a mix of enums and interfaces for api request and response objects
+Types for [api.uptimerobot.com](https://uptimerobot.com) v2
 
 ## Usage
 
 Official API docs can be found here: https://uptimerobot.com/api
 
 ```
-
-// eg. 1
-import { Monitor, MonitorType } from 'uptimerobot'
-
-const myMonitor: Monitor = {
+// eg. 1 via namespace
+const myMonitor: Uptimerobot.Monitor = {
   type: MonitorType.https,
   ...
 }
 
-// eg. 2
+// eg. 2 via module
 import { MonitorListRequest, MonitorListResponse, ErrorResponse } from 'uptimerobot'
 
 const fetchMonitors = async (
@@ -29,12 +24,9 @@ const fetchMonitors = async (
 ## Reference
 
 ```
-  enum Stat
-  enum Pagination
+Uptimerobot {
   Account
   AlertContact
-  enum AlertContactType
-  enum AlertContactState
   AlertContactListRequest
   AlertContactListResponse
   AlertContactCreateRequest
@@ -45,14 +37,6 @@ const fetchMonitors = async (
   AlertContactDeleteResponse
   Log
   Monitor
-  enum MonitorType
-  enum MonitorSubType
-  enum MonitorKeywordType
-  enum MonitorState
-  enum MonitorLogType
-  enum MonitorHttpMethod
-  enum MonitorHttpMethodPostType
-  enum MonitorHttpMethodContentType
   MonitorListRequest
   MonitorListResponse
   MonitorCreateRequest
@@ -64,8 +48,6 @@ const fetchMonitors = async (
   MonitorResetRequest
   MonitorResetResponse
   MWindow
-  enum MWindowType
-  enum MWindowState
   MWindowListRequest
   MWindowListResponse
   MWindowCreateRequest
@@ -75,9 +57,6 @@ const fetchMonitors = async (
   MWindowDeleteRequest
   MWindowDeleteResponse
   PSP
-  enum PSPState
-  enum PSPSort
-  enum PSPType
   PSPListRequest
   PSPListResponse
   PSPCreateRequest
