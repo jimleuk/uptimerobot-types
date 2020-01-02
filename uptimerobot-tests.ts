@@ -3,6 +3,7 @@ import {
   ErrorResponse,
   Log,
   Account,
+  AccountListResponse,
   AlertContact,
   AlertContactCreateRequest,
   AlertContactCreateResponse,
@@ -108,6 +109,11 @@ const account: Account = {
   down_monitors: 2,
   paused_monitors: 0,
 };
+
+const accountListResponse: AccountListResponse = {
+  stat: 'ok',
+  account,
+}
 
 const alertContact: AlertContact = {
   id: 0,

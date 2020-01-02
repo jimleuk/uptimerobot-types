@@ -30,6 +30,11 @@ declare namespace Uptimerobot {
     paused_monitors: number;
   }
 
+  export interface AccountListSuccessResponse {
+    stat: 'ok' | 'fail'
+    account: Account
+  }
+
   /** Response object for Bad requests */
   export interface ErrorResponse {
     stat: 'ok' | 'fail';
