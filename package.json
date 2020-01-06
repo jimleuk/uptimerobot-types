@@ -1,7 +1,7 @@
 {
   "name": "@types/uptimerobot",
   "version": "2.0.3",
-  "description": "Type definitions for api.uptimerobot.com",
+  "description": "Type definitions for uptimerobot api v2",
   "main": "./index.ts",
   "types": "./index.ts",
   "license": "MIT",
